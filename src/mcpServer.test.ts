@@ -43,10 +43,10 @@ describe('AirtableMCPServer', () => {
         id: 'rec1',
         fields: { name: 'Test Record' },
       }),
-      createRecord: vi.fn().mockResolvedValue({
+      createRecords: vi.fn().mockResolvedValue([{
         id: 'rec1',
         fields: { name: 'New Record' },
-      }),
+      }]),
       updateRecords: vi.fn().mockResolvedValue([
         { id: 'rec1', fields: { name: 'Updated Record' } },
       ]),

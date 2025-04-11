@@ -102,15 +102,16 @@ export class AirtableService implements IAirtableService {
     );
   }
 
-  async createRecord(baseId: string, tableId: string, fields: FieldSet): Promise<AirtableRecord> {
-    return this.fetchFromAPI(
+  async createRecords(baseId: string, tableId: string, records: { fields: FieldSet }[]): Promise<AirtableRecord[]> {
+    const resp = await this.fetchFromAPI(
       `/v0/${baseId}/${tableId}`,
-      z.object({ id: z.string(), fields: z.record(z.any()) }),
+      z.object({ records: z.array(z.object({ id: z.string(), fields: z.record(z.any()) })) }),
       {
         method: 'POST',
-        body: JSON.stringify({ fields }),
-      },
+        body: JSON.stringify({ records })
+      }
     );
+    return resp.records
   }
 
   async updateRecords(
@@ -215,8 +216,8 @@ export class AirtableService implements IAirtableService {
     ];
 
     const searchableFields = table.fields
-      .filter((field) => searchableFieldTypes.includes(field.type))
-      .map((field) => field.id);
+    .filter((field) => searchableFieldTypes.includes(field.type))
+    .map((field) => field.id);
 
     if (searchableFields.length === 0) {
       throw new Error('No text fields available to search');
@@ -251,10 +252,10 @@ export class AirtableService implements IAirtableService {
 
     // Build OR(FIND("term", field1), FIND("term", field2), ...)
     const filterByFormula = `OR(${
-      searchFields
-        .map((fieldId) => `FIND("${escapedTerm}", {${fieldId}})`)
-        .join(',')
-    })`;
+searchFields
+.map((fieldId) => `FIND("${escapedTerm}", {${fieldId}})`)
+.join(',')
+})`;
 
     return this.listRecords(baseId, tableId, { maxRecords, filterByFormula });
   }

@@ -17,7 +17,6 @@ import {
   ListTablesArgsSchema,
   DescribeTableArgsSchema,
   GetRecordArgsSchema,
-  CreateRecordArgsSchema,
   UpdateRecordsArgsSchema,
   DeleteRecordsArgsSchema,
   CreateTableArgsSchema,
@@ -27,6 +26,7 @@ import {
   SearchRecordsArgsSchema,
   IAirtableService,
   IAirtableMCPServer,
+  CreateRecordsArgsSchema,
 } from './types.js';
 
 const getInputSchema = (schema: z.ZodType<object>): ListToolsResult['tools'][0]['inputSchema'] => {
@@ -169,11 +169,6 @@ export class AirtableMCPServer implements IAirtableMCPServer {
           inputSchema: getInputSchema(GetRecordArgsSchema),
         },
         {
-          name: 'create_record',
-          description: 'Create a new record in a table',
-          inputSchema: getInputSchema(CreateRecordArgsSchema),
-        },
-        {
           name: 'update_records',
           description: 'Update up to 10 records in a table',
           inputSchema: getInputSchema(UpdateRecordsArgsSchema),
@@ -203,6 +198,11 @@ export class AirtableMCPServer implements IAirtableMCPServer {
           description: 'Update a field\'s name or description',
           inputSchema: getInputSchema(UpdateFieldArgsSchema),
         },
+        {
+          name: 'create_records',
+          description: 'Creates one or more records',
+          inputSchema: getInputSchema(CreateRecordsArgsSchema),
+        }
       ],
     };
   }
@@ -326,13 +326,10 @@ export class AirtableMCPServer implements IAirtableMCPServer {
           });
         }
 
-        case 'create_record': {
-          const args = CreateRecordArgsSchema.parse(request.params.arguments);
-          const record = await this.airtableService.createRecord(args.baseId, args.tableId, args.fields);
-          return formatToolResponse({
-            id: record.id,
-            fields: record.fields,
-          });
+        case 'create_records': {
+          const args = CreateRecordsArgsSchema.parse(request.params.arguments);
+          const records = await this.airtableService.createRecords(args.baseId, args.tableId, args.records);
+          return formatToolResponse(records);
         }
 
         case 'update_records': {

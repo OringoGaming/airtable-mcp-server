@@ -32,88 +32,88 @@ export const FieldSchema = z.object({
     z.object({ type: z.literal('barcode') }),
     z.object({ type: z.literal('button') }),
     z
-      .object({
-        options: z.object({
-          color: z
-            .enum([
-              'greenBright',
-              'tealBright',
-              'cyanBright',
-              'blueBright',
-              'purpleBright',
-              'pinkBright',
-              'redBright',
-              'orangeBright',
-              'yellowBright',
-              'grayBright',
-            ])
-            .describe('The color of the checkbox.'),
-          icon: z
-            .enum([
-              'check',
-              'xCheckbox',
-              'star',
-              'heart',
-              'thumbsUp',
-              'flag',
-              'dot',
-            ])
-            .describe('The icon name of the checkbox.'),
-        }),
-        type: z.literal('checkbox'),
-      })
-      .describe(
-        "Bases on a free or plus plan are limited to using the `'check'` icon and `'greenBright'` color.",
-      ),
+    .object({
+      options: z.object({
+        color: z
+        .enum([
+          'greenBright',
+          'tealBright',
+          'cyanBright',
+          'blueBright',
+          'purpleBright',
+          'pinkBright',
+          'redBright',
+          'orangeBright',
+          'yellowBright',
+          'grayBright',
+        ])
+        .describe('The color of the checkbox.'),
+        icon: z
+        .enum([
+          'check',
+          'xCheckbox',
+          'star',
+          'heart',
+          'thumbsUp',
+          'flag',
+          'dot',
+        ])
+        .describe('The icon name of the checkbox.'),
+      }),
+      type: z.literal('checkbox'),
+    })
+    .describe(
+      "Bases on a free or plus plan are limited to using the `'check'` icon and `'greenBright'` color.",
+    ),
     z.object({ type: z.literal('createdBy') }),
     z.object({
       options: z.object({
         result: z
-          .union([
-            z.object({
-              options: z.object({
-                dateFormat: z.object({
-                  format: z
-                    .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
-                    .describe(
-                      '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
-                    ),
-                  name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
-                }),
+        .union([
+          z.object({
+            options: z.object({
+              dateFormat: z.object({
+                format: z
+                .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
+                .describe(
+                  '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
+                ),
+                name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
               }),
-              type: z.literal('date'),
             }),
-            z.object({
-              options: z.object({
-                dateFormat: z.object({
-                  format: z
-                    .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
-                    .describe(
-                      '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
-                    ),
-                  name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
-                }),
-                timeFormat: z.object({
-                  format: z.enum(['h:mma', 'HH:mm']),
-                  name: z.enum(['12hour', '24hour']),
-                }),
-                timeZone: z.any(),
+            type: z.literal('date'),
+          }),
+          z.object({
+            options: z.object({
+              dateFormat: z.object({
+                format: z
+                .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
+                .describe(
+                  '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
+                ),
+                name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
               }),
-              type: z.literal('dateTime'),
+              timeFormat: z.object({
+                format: z.enum(['h:mma', 'HH:mm']),
+                name: z.enum(['12hour', '24hour']),
+              }),
+              timeZone: z.any(),
             }),
-          ])
-          .describe('This will always be a `date` or `dateTime` field config.')
-          .optional(),
+            type: z.literal('dateTime'),
+          }),
+        ])
+        .describe('This will always be a `date` or `dateTime` field config.')
+        .optional(),
       }),
       type: z.literal('createdTime'),
     }),
     z.object({
       options: z.object({
         isValid: z
-          .boolean()
-          .describe(
-            '`false` when recordLinkFieldId is null, e.g. the referenced column was deleted.',
-          ),
+        .boolean()
+        .describe(
+          '`false` when recordLinkFieldId is null, e.g. the referenced column was deleted.',
+        ),
         recordLinkFieldId: z.union([z.string(), z.null()]).optional(),
       }),
       type: z.literal('count'),
@@ -122,47 +122,47 @@ export const FieldSchema = z.object({
     z.object({
       options: z.object({
         isValid: z
-          .boolean()
-          .describe('False if this formula/field configuation has an error'),
+        .boolean()
+        .describe('False if this formula/field configuation has an error'),
         referencedFieldIds: z
-          .union([z.array(z.string()), z.null()])
-          .describe('The fields to check the last modified time of'),
+        .union([z.array(z.string()), z.null()])
+        .describe('The fields to check the last modified time of'),
         result: z
-          .union([
-            z.object({
-              options: z.object({
-                dateFormat: z.object({
-                  format: z
-                    .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
-                    .describe(
-                      '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
-                    ),
-                  name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
-                }),
+        .union([
+          z.object({
+            options: z.object({
+              dateFormat: z.object({
+                format: z
+                .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
+                .describe(
+                  '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
+                ),
+                name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
               }),
-              type: z.literal('date'),
             }),
-            z.object({
-              options: z.object({
-                dateFormat: z.object({
-                  format: z
-                    .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
-                    .describe(
-                      '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
-                    ),
-                  name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
-                }),
-                timeFormat: z.object({
-                  format: z.enum(['h:mma', 'HH:mm']),
-                  name: z.enum(['12hour', '24hour']),
-                }),
-                timeZone: z.any(),
+            type: z.literal('date'),
+          }),
+          z.object({
+            options: z.object({
+              dateFormat: z.object({
+                format: z
+                .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
+                .describe(
+                  '`format` is always provided when reading.\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
+                ),
+                name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
               }),
-              type: z.literal('dateTime'),
+              timeFormat: z.object({
+                format: z.enum(['h:mma', 'HH:mm']),
+                name: z.enum(['12hour', '24hour']),
+              }),
+              timeZone: z.any(),
             }),
-            z.null(),
-          ])
-          .describe('This will always be a `date` or `dateTime` field config.'),
+            type: z.literal('dateTime'),
+          }),
+          z.null(),
+        ])
+        .describe('This will always be a `date` or `dateTime` field config.'),
       }),
       type: z.literal('lastModifiedTime'),
     }),
@@ -170,53 +170,53 @@ export const FieldSchema = z.object({
     z.object({
       options: z.object({
         fieldIdInLinkedTable: z
-          .union([z.string(), z.null()])
-          .describe(
-            'The field in the linked table that this field is looking up.',
-          ),
+        .union([z.string(), z.null()])
+        .describe(
+          'The field in the linked table that this field is looking up.',
+        ),
         isValid: z
-          .boolean()
-          .describe(
-            'Is the field currently valid (e.g. false if the linked record field has\nbeen deleted)',
-          ),
+        .boolean()
+        .describe(
+          'Is the field currently valid (e.g. false if the linked record field has\nbeen deleted)',
+        ),
         recordLinkFieldId: z
-          .union([z.string(), z.null()])
-          .describe('The linked record field in the current table.'),
+        .union([z.string(), z.null()])
+        .describe('The linked record field in the current table.'),
         result: z
-          .union([z.any(), z.null()])
-          .describe(
-            'The field type and options inside of the linked table. See other field\ntype configs on this page for the possible values. Can be null if invalid.',
-          ),
+        .union([z.any(), z.null()])
+        .describe(
+          'The field type and options inside of the linked table. See other field\ntype configs on this page for the possible values. Can be null if invalid.',
+        ),
       }),
       type: z.literal('lookup'),
     }),
     z.object({
       options: z.object({
         precision: z
-          .number()
-          .describe(
-            'Indicates the number of digits shown to the right of the decimal point for this field. (0-8 inclusive)',
-          ),
+        .number()
+        .describe(
+          'Indicates the number of digits shown to the right of the decimal point for this field. (0-8 inclusive)',
+        ),
       }),
       type: z.literal('number'),
     }),
     z.object({
       options: z.object({
         precision: z
-          .number()
-          .describe(
-            'Indicates the number of digits shown to the right of the decimal point for this field. (0-8 inclusive)',
-          ),
+        .number()
+        .describe(
+          'Indicates the number of digits shown to the right of the decimal point for this field. (0-8 inclusive)',
+        ),
       }),
       type: z.literal('percent'),
     }),
     z.object({
       options: z.object({
         precision: z
-          .number()
-          .describe(
-            'Indicates the number of digits shown to the right of the decimal point for this field. (0-7 inclusive)',
-          ),
+        .number()
+        .describe(
+          'Indicates the number of digits shown to the right of the decimal point for this field. (0-7 inclusive)',
+        ),
         symbol: z.string().describe('Currency symbol to use.'),
       }),
       type: z.literal('currency'),
@@ -236,55 +236,55 @@ export const FieldSchema = z.object({
     z.object({ type: z.literal('multilineText') }),
     z.object({ type: z.literal('phoneNumber') }),
     z
-      .object({
-        options: z.object({
-          color: z
-            .enum([
-              'yellowBright',
-              'orangeBright',
-              'redBright',
-              'pinkBright',
-              'purpleBright',
-              'blueBright',
-              'cyanBright',
-              'tealBright',
-              'greenBright',
-              'grayBright',
-            ])
-            .describe('The color of selected icons.'),
-          icon: z
-            .enum(['star', 'heart', 'thumbsUp', 'flag', 'dot'])
-            .describe('The icon name used to display the rating.'),
-          max: z
-            .number()
-            .describe(
-              'The maximum value for the rating, from 1 to 10 inclusive.',
-            ),
-        }),
-        type: z.literal('rating'),
-      })
-      .describe(
-        "Bases on a free or plus plan are limited to using the 'star' icon and 'yellowBright' color.",
-      ),
+    .object({
+      options: z.object({
+        color: z
+        .enum([
+          'yellowBright',
+          'orangeBright',
+          'redBright',
+          'pinkBright',
+          'purpleBright',
+          'blueBright',
+          'cyanBright',
+          'tealBright',
+          'greenBright',
+          'grayBright',
+        ])
+        .describe('The color of selected icons.'),
+        icon: z
+        .enum(['star', 'heart', 'thumbsUp', 'flag', 'dot'])
+        .describe('The icon name used to display the rating.'),
+        max: z
+        .number()
+        .describe(
+          'The maximum value for the rating, from 1 to 10 inclusive.',
+        ),
+      }),
+      type: z.literal('rating'),
+    })
+    .describe(
+      "Bases on a free or plus plan are limited to using the 'star' icon and 'yellowBright' color.",
+    ),
     z.object({ type: z.literal('richText') }),
     z.object({
       options: z.object({
         fieldIdInLinkedTable: z
-          .string()
-          .describe('The id of the field in the linked table')
-          .optional(),
+        .string()
+        .describe('The id of the field in the linked table')
+        .optional(),
         isValid: z.boolean().optional(),
         recordLinkFieldId: z.string().describe('The linked field id').optional(),
         referencedFieldIds: z
-          .array(z.string())
-          .describe('The ids of any fields referenced in the rollup formula')
-          .optional(),
+        .array(z.string())
+        .describe('The ids of any fields referenced in the rollup formula')
+        .optional(),
         result: z
-          .union([z.any(), z.null()])
-          .describe(
-            'The resulting field type and options for the rollup. See other field\ntype configs on this page for the possible values. Can be null if invalid.',
-          )
-          .optional(),
+        .union([z.any(), z.null()])
+        .describe(
+          'The resulting field type and options for the rollup. See other field\ntype configs on this page for the possible values. Can be null if invalid.',
+        )
+        .optional(),
       }),
       type: z.literal('rollup'),
     }),
@@ -296,11 +296,11 @@ export const FieldSchema = z.object({
         choices: z.array(
           z.object({
             color: z
-              .string()
-              .describe(
-                'Optional when the select field is configured to not use colors.\n\nAllowed values: "blueLight2", "cyanLight2", "tealLight2", "greenLight2", "yellowLight2", "orangeLight2", "redLight2", "pinkLight2", "purpleLight2", "grayLight2", "blueLight1", "cyanLight1", "tealLight1", "greenLight1", "yellowLight1", "orangeLight1", "redLight1", "pinkLight1", "purpleLight1", "grayLight1", "blueBright", "cyanBright", "tealBright", "greenBright", "yellowBright", "orangeBright", "redBright", "pinkBright", "purpleBright", "grayBright", "blueDark1", "cyanDark1", "tealDark1", "greenDark1", "yellowDark1", "orangeDark1", "redDark1", "pinkDark1", "purpleDark1", "grayDark1"',
-              )
-              .optional(),
+            .string()
+            .describe(
+              'Optional when the select field is configured to not use colors.\n\nAllowed values: "blueLight2", "cyanLight2", "tealLight2", "greenLight2", "yellowLight2", "orangeLight2", "redLight2", "pinkLight2", "purpleLight2", "grayLight2", "blueLight1", "cyanLight1", "tealLight1", "greenLight1", "yellowLight1", "orangeLight1", "redLight1", "pinkLight1", "purpleLight1", "grayLight1", "blueBright", "cyanBright", "tealBright", "greenBright", "yellowBright", "orangeBright", "redBright", "pinkBright", "purpleBright", "grayBright", "blueDark1", "cyanDark1", "tealDark1", "greenDark1", "yellowDark1", "orangeDark1", "redDark1", "pinkDark1", "purpleDark1", "grayDark1"',
+            )
+            .optional(),
             id: z.string(),
             name: z.string(),
           }),
@@ -311,57 +311,57 @@ export const FieldSchema = z.object({
     z.object({
       options: z.object({
         prompt: z
-          .array(
-            z.union([
-              z.string(),
-              z.object({ field: z.object({ fieldId: z.string() }) }),
-            ]),
-          )
-          .describe(
-            'The prompt that is used to generate the results in the AI field, additional object\ntypes may be added in the future. Currently, this is an array of strings or objects that identify any fields interpolated into the prompt.\n\nThe prompt will not currently be provided if this field config is within another\nfields configuration (like a lookup field)',
-          )
-          .optional(),
+        .array(
+          z.union([
+            z.string(),
+            z.object({ field: z.object({ fieldId: z.string() }) }),
+          ]),
+        )
+        .describe(
+          'The prompt that is used to generate the results in the AI field, additional object\ntypes may be added in the future. Currently, this is an array of strings or objects that identify any fields interpolated into the prompt.\n\nThe prompt will not currently be provided if this field config is within another\nfields configuration (like a lookup field)',
+        )
+        .optional(),
         referencedFieldIds: z
-          .array(z.string())
-          .describe(
-            'The other fields in the record that are used in the ai field\n\nThe referencedFieldIds will not currently be provided if this field config is within another\nfields configuration (like a lookup field)',
-          )
-          .optional(),
+        .array(z.string())
+        .describe(
+          'The other fields in the record that are used in the ai field\n\nThe referencedFieldIds will not currently be provided if this field config is within another\nfields configuration (like a lookup field)',
+        )
+        .optional(),
       }),
       type: z.literal('aiText'),
     }),
     z
-      .object({
-        options: z.object({
-          linkedTableId: z
-            .string()
-            .describe('The ID of the table this field links to'),
-          viewIdForRecordSelection: z
-            .string()
-            .describe(
-              'The ID of the view in the linked table\nto use when showing a list of records to select from',
-            )
-            .optional(),
-        }),
-        type: z.literal('multipleRecordLinks'),
-      })
-      .describe(
-        'Creating "multipleRecordLinks" fields is supported but updating options for\nexisting "multipleRecordLinks" fields is not supported.',
-      ),
+    .object({
+      options: z.object({
+        linkedTableId: z
+        .string()
+        .describe('The ID of the table this field links to'),
+        viewIdForRecordSelection: z
+        .string()
+        .describe(
+          'The ID of the view in the linked table\nto use when showing a list of records to select from',
+        )
+        .optional(),
+      }),
+      type: z.literal('multipleRecordLinks'),
+    })
+    .describe(
+      'Creating "multipleRecordLinks" fields is supported but updating options for\nexisting "multipleRecordLinks" fields is not supported.',
+    ),
     z.object({
       options: z.object({
         choices: z.array(
           z.object({
             color: z
-              .string()
-              .describe('Optional when creating an option.')
-              .optional(),
+            .string()
+            .describe('Optional when creating an option.')
+            .optional(),
             id: z
-              .string()
-              .describe(
-                'This is not specified when creating new options, useful when specifing existing\noptions (for example: reordering options, keeping old options and adding new ones, etc)',
-              )
-              .optional(),
+            .string()
+            .describe(
+              'This is not specified when creating new options, useful when specifing existing\noptions (for example: reordering options, keeping old options and adding new ones, etc)',
+            )
+            .optional(),
             name: z.string(),
           }),
         ),
@@ -373,15 +373,15 @@ export const FieldSchema = z.object({
         choices: z.array(
           z.object({
             color: z
-              .string()
-              .describe('Optional when creating an option.')
-              .optional(),
+            .string()
+            .describe('Optional when creating an option.')
+            .optional(),
             id: z
-              .string()
-              .describe(
-                'This is not specified when creating new options, useful when specifing existing\noptions (for example: reordering options, keeping old options and adding new ones, etc)',
-              )
-              .optional(),
+            .string()
+            .describe(
+              'This is not specified when creating new options, useful when specifing existing\noptions (for example: reordering options, keeping old options and adding new ones, etc)',
+            )
+            .optional(),
             name: z.string(),
           }),
         ),
@@ -400,11 +400,11 @@ export const FieldSchema = z.object({
       options: z.object({
         dateFormat: z.object({
           format: z
-            .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
-            .describe(
-              'Format is optional when writing, but it must match\nthe corresponding name if provided.\n\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
-            )
-            .optional(),
+          .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
+          .describe(
+            'Format is optional when writing, but it must match\nthe corresponding name if provided.\n\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
+          )
+          .optional(),
           name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
         }),
       }),
@@ -414,11 +414,11 @@ export const FieldSchema = z.object({
       options: z.object({
         dateFormat: z.object({
           format: z
-            .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
-            .describe(
-              'Format is optional when writing, but it must match\nthe corresponding name if provided.\n\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
-            )
-            .optional(),
+          .enum(['l', 'LL', 'M/D/YYYY', 'D/M/YYYY', 'YYYY-MM-DD'])
+          .describe(
+            'Format is optional when writing, but it must match\nthe corresponding name if provided.\n\n(`l` for local, `LL` for friendly, `M/D/YYYY` for us, `D/M/YYYY` for european, `YYYY-MM-DD` for iso)',
+          )
+          .optional(),
           name: z.enum(['local', 'friendly', 'us', 'european', 'iso']),
         }),
         timeFormat: z.object({
@@ -500,10 +500,12 @@ export const GetRecordArgsSchema = z.object({
   recordId: z.string(),
 });
 
-export const CreateRecordArgsSchema = z.object({
+export const CreateRecordsArgsSchema = z.object({
   baseId: z.string(),
   tableId: z.string(),
-  fields: z.record(z.any()),
+  records: z.array(z.object({
+    fields: z.record(z.any()).describe('The field to insert. The key should be a name of a field in the table.'),
+  })).describe('Records to insert. Maximum of 10.'),
 });
 
 export const UpdateRecordsArgsSchema = z.object({
@@ -573,7 +575,6 @@ export interface IAirtableService {
   getBaseSchema(baseId: string): Promise<BaseSchemaResponse>;
   listRecords(baseId: string, tableId: string, options?: ListRecordsOptions): Promise<AirtableRecord[]>;
   getRecord(baseId: string, tableId: string, recordId: string): Promise<AirtableRecord>;
-  createRecord(baseId: string, tableId: string, fields: FieldSet): Promise<AirtableRecord>;
   updateRecords(baseId: string, tableId: string, records: { id: string; fields: FieldSet }[]): Promise<AirtableRecord[]>;
   deleteRecords(baseId: string, tableId: string, recordIds: string[]): Promise<{ id: string }[]>;
   createTable(baseId: string, name: string, fields: Field[], description?: string): Promise<Table>;
@@ -581,6 +582,7 @@ export interface IAirtableService {
   createField(baseId: string, tableId: string, field: Field): Promise<Field & { id: string }>;
   updateField(baseId: string, tableId: string, fieldId: string, updates: { name?: string | undefined; description?: string | undefined }): Promise<Field & { id: string }>;
   searchRecords(baseId: string, tableId: string, searchTerm: string, fieldIds?: string[], maxRecords?: number): Promise<AirtableRecord[]>;
+  createRecords(baseId: string, tableId: string, records: { fields: FieldSet }[]): Promise<AirtableRecord[]>;
 }
 
 export interface IAirtableMCPServer {
