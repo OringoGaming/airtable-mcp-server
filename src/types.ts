@@ -23,7 +23,7 @@ export const FieldOptionsSchema = z.object({
 }).passthrough();
 
 export const FieldSchema = z.object({
-  name: z.string(),
+  name: z.string(),                                         
   description: z.string().optional(),
 }).and(
   // Extracted from Airtable API docs
@@ -31,8 +31,7 @@ export const FieldSchema = z.object({
     z.object({ type: z.literal('autoNumber') }),
     z.object({ type: z.literal('barcode') }),
     z.object({ type: z.literal('button') }),
-    z
-    .object({
+    z.object({
       options: z.object({
         color: z
         .enum([
@@ -118,7 +117,6 @@ export const FieldSchema = z.object({
       }),
       type: z.literal('count'),
     }),
-    z.any(),
     z.object({
       options: z.object({
         isValid: z
@@ -425,7 +423,7 @@ export const FieldSchema = z.object({
           format: z.enum(['h:mma', 'HH:mm']).optional(),
           name: z.enum(['12hour', '24hour']),
         }),
-        timeZone: z.any(),
+        timeZone: z.string(),
       }),
       type: z.literal('dateTime'),
     }),
@@ -433,8 +431,9 @@ export const FieldSchema = z.object({
       options: z.object({ isReversed: z.boolean() }).optional(),
       type: z.literal('multipleAttachments'),
     }),
+    z.any(),
   ]),
-).describe('The config of a field. NB: Formula fields cannot be created with this MCP due to a limitation in the Airtable API.');
+).describe('The config of a field. NB: Formula, autonumber and button fields cannot be created with this MCP due to a limitation in the Airtable API. Tell the user about this and let them implement the field by themselves.');
 
 export const ViewSchema = z.object({
   id: z.string(),
